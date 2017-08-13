@@ -38,15 +38,15 @@ exec-in-repo = (command, name) ->>
             
 
 module.exports = 
-    activate: ->>
-        require \atom-package-deps .install 'git-time-metric'
+    activate: ->>        
+        require \atom-package-deps .install 'livescript-ide-timetracker'
         @disposables = new CompositeDisposable
             ..add atom.commands.add 'atom-workspace',
                 'timetracker:status': -> exec-in-repo 'gtm status', 'timetracker:status'
                 'timetracker:sync': -> exec-in-repo 'git fetchgtm && git pushgtm', 'timetracker:sync'
                 'livescript-ide:push': -> exec-in-repo 'git pushgtm && git push', 'livescript-ide:push'
                 'livescript-ide:fetch': -> exec-in-repo 'git fetch && git fetchgtm' 'livescript-ide:fetch'
-    
+        
     deactivate: ->
         @disposables?dispose! 
         @disposables = null

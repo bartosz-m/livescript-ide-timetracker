@@ -27,5 +27,10 @@
     "fs-extra": "^4.0.1",
     "livescript-async": "^1.5.2"
   },
-  "package-deps": ["git-time-metric"]
+  "package-deps": [
+    "git-time-metric"
+  ],
+  "dependencies": {
+    "atom-package-deps": "^4.6.0"
+  }
 }
