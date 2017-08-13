@@ -38,8 +38,8 @@ exec-in-repo = (command, name) ->>
             
 
 module.exports = 
-    activate: ->
-        console.log \ready
+    activate: ->>
+        require \atom-package-deps .install 'git-time-metric'
         @disposables = new CompositeDisposable
             ..add atom.commands.add 'atom-workspace',
                 'timetracker:status': -> exec-in-repo 'gtm status', 'timetracker:status'
