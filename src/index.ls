@@ -4,16 +4,20 @@ require! {
 
 var exec
 
-exec-in-repository = (repository, command) ->
+exec-in-repository = (repository, command, name) ->
     { exec } ?:= require 'child_process'
     options =
         cwd: repository.get-working-directory!
       
     exec command, options, (error, stdout) ->
         if error
-            console.error error
+          atom.notifications.add-error name,
+              dismissable: true
+              detail: error
         else
-            console.log stdout
+            atom.notifications.add-success name,
+                dismissable: true
+                detail: stdout
 
 get-active-repository = ->
     if editor = atom.workspace.get-active-text-editor!
@@ -28,9 +32,9 @@ get-current-repository = ->>
         repository = atom.project.get-repositories!0
     repository
 
-exec-in-repo = (command) ->>
+exec-in-repo = (command, name) ->>
     if repository = await get-current-repository!
-        exec-in-repository repository, command
+        exec-in-repository repository, command, name
             
 
 module.exports = 
@@ -38,10 +42,10 @@ module.exports =
         console.log \ready
         @disposables = new CompositeDisposable
             ..add atom.commands.add 'atom-workspace',
-                'timetracker:status': -> exec-in-repo 'gtm status'
-                'timetracker:sync': -> exec-in-repo 'git fetchgtm && git pushgtm'
-                'livescript-ide:push': -> exec-in-repo 'git pushgtm && git push'
-                'livescript-ide:fetch': -> exec-in-repo 'git fetch && git fetchgtm'
+                'timetracker:status': -> exec-in-repo 'gtm status', 'timetracker:status'
+                'timetracker:sync': -> exec-in-repo 'git fetchgtm && git pushgtm', 'timetracker:sync'
+                'livescript-ide:push': -> exec-in-repo 'git pushgtm && git push', 'livescript-ide:push'
+                'livescript-ide:fetch': -> exec-in-repo 'git fetch && git fetchgtm' 'livescript-ide:fetch'
     
     deactivate: ->
         @disposables?dispose! 
