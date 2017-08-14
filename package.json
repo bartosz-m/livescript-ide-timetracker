@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:bartosz-m/livescript-ide-timetracker.git"
+    "url": "https://github.com/bartosz-m/livescript-ide-timetracker.git"
   },
   "keywords": [
     "timetracking",
