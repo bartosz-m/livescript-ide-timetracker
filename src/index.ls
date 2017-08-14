@@ -44,6 +44,10 @@ module.exports =
             ..add atom.commands.add 'atom-workspace',
                 'timetracker:status': -> exec-in-repo 'gtm status', 'timetracker:status'
                 'timetracker:sync': -> exec-in-repo 'git fetchgtm && git pushgtm', 'timetracker:sync'
+                'timetracker:merge': -> exec-in-repo '
+                  git fetch origin refs/notes/gtm-data:refs/notes/origin/gtm-data \
+                  && git notes --ref gtm-data merge -v origin/gtm-data \
+                  && git pushgtm'
                 'livescript-ide:push': -> exec-in-repo 'git pushgtm && git push', 'livescript-ide:push'
                 'livescript-ide:fetch': -> exec-in-repo 'git fetch && git fetchgtm' 'livescript-ide:fetch'
         
